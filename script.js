@@ -444,7 +444,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const menuToggle = document.getElementById('menuToggle');
     const navMenu = document.getElementById('navMenu');
     if (menuToggle && navMenu) {
-        menuToggle.addEventListener('click', () => {
+        // Toggle menu
+        menuToggle.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevenir que se propague al document
             menuToggle.classList.toggle('active');
             navMenu.classList.toggle('active');
         });
@@ -457,11 +459,20 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
         
-        // Cerrar menú al hacer click fuera (en el overlay)
+        // Cerrar menú al hacer click en CUALQUIER parte de la página
         document.addEventListener('click', (e) => {
-            if (navMenu.classList.contains('active') && 
-                !navMenu.contains(e.target) && 
-                !menuToggle.contains(e.target)) {
+            // Si el menú está abierto y el click no es en el menú ni en el botón
+            if (navMenu.classList.contains('active')) {
+                if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+                    menuToggle.classList.remove('active');
+                    navMenu.classList.remove('active');
+                }
+            }
+        });
+
+        // También cerrar con la tecla Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && navMenu.classList.contains('active')) {
                 menuToggle.classList.remove('active');
                 navMenu.classList.remove('active');
             }
