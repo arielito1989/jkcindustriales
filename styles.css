@@ -1037,6 +1037,36 @@ section {
 }
 
 /* Infinite Carousel for Clients */
+.clients-subsection {
+    margin-bottom: 3rem;
+}
+
+.clients-subsection-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    justify-content: center;
+}
+
+.clients-subsection-title svg {
+    width: 28px !important;
+    height: 28px !important;
+    color: var(--secondary-color);
+}
+
+.clients-subsection-description {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    max-width: 700px;
+    margin: 0 auto 1.5rem;
+    line-height: 1.6;
+}
+
 .clients-carousel-wrapper {
     overflow: hidden;
     padding: 2rem 0;
@@ -1053,6 +1083,10 @@ section {
     gap: 3rem;
     animation: scroll-infinite 30s linear infinite;
     will-change: transform;
+}
+
+.clients-carousel-slow {
+    animation: scroll-infinite 40s linear infinite;
 }
 
 .clients-carousel:hover {
