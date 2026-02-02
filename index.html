@@ -434,35 +434,103 @@
                 <h2 class="section-title">Nuestros Clientes</h2>
                 <p class="section-subtitle">Empresas que confían en nosotros</p>
             </div>
-            <div class="clients-grid" id="clientsGrid">
-                <!-- Client logos -->
-                <div class="client-logo delay-100">
-                    <img src="images/clientes/avon.png" alt="Avon"
-                        style="max-height: 80px; width: auto; filter: grayscale(100%); transition: all 0.3s ease;">
-                </div>
-                <div class="client-logo delay-200">
-                    <img src="images/clientes/bimbo.png" alt="Bimbo"
-                        style="max-height: 80px; width: auto; filter: grayscale(100%); transition: all 0.3s ease;">
-                </div>
-                <div class="client-logo delay-300">
-                    <img src="images/clientes/biosidus.png" alt="Biosidus"
-                        style="max-height: 80px; width: auto; filter: grayscale(100%); transition: all 0.3s ease;">
-                </div>
-                <div class="client-logo delay-400">
-                    <img src="https://via.placeholder.com/200x80/00529C/FFFFFF?text=RIS" alt="RIS"
-                        style="max-height: 80px; width: auto; filter: grayscale(100%); transition: all 0.3s ease;">
-                </div>
-                <div class="client-logo delay-500">
-                    <img src="https://via.placeholder.com/200x80/004C97/FFFFFF?text=Telecom+Constitucion" alt="Telecom Constitución"
-                        style="max-height: 80px; width: auto; filter: grayscale(100%); transition: all 0.3s ease;">
-                </div>
-                <div class="client-logo delay-600">
-                    <img src="https://via.placeholder.com/200x80/00529C/FFFFFF?text=Calderas+y+Montajes" alt="Calderas y Montajes"
-                        style="max-height: 80px; width: auto; filter: grayscale(100%); transition: all 0.3s ease;">
-                </div>
-                <div class="client-logo delay-700">
-                    <img src="https://via.placeholder.com/200x80/004C97/FFFFFF?text=LN+Construcciones" alt="LN Construcciones y Montajes"
-                        style="max-height: 80px; width: auto; filter: grayscale(100%); transition: all 0.3s ease;">
+            
+            <!-- Infinite Carousel -->
+            <div class="clients-carousel-wrapper">
+                <div class="clients-carousel">
+                    <!-- First set of logos -->
+                    <div class="client-slide">
+                        <svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="200" height="80" fill="#e91e63"/>
+                            <text x="100" y="45" font-size="28" font-weight="bold" fill="white" text-anchor="middle" font-family="Arial">AVON</text>
+                        </svg>
+                    </div>
+                    <div class="client-slide">
+                        <svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="200" height="80" fill="#ffd700"/>
+                            <text x="100" y="45" font-size="28" font-weight="bold" fill="#c41e3a" text-anchor="middle" font-family="Arial">BIMBO</text>
+                        </svg>
+                    </div>
+                    <div class="client-slide">
+                        <svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="200" height="80" fill="#00529c"/>
+                            <text x="100" y="45" font-size="24" font-weight="bold" fill="white" text-anchor="middle" font-family="Arial">BIOSIDUS</text>
+                        </svg>
+                    </div>
+                    <div class="client-slide">
+                        <svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="200" height="80" fill="#004c97"/>
+                            <text x="100" y="45" font-size="32" font-weight="bold" fill="white" text-anchor="middle" font-family="Arial">RIS</text>
+                        </svg>
+                    </div>
+                    <div class="client-slide">
+                        <svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="200" height="80" fill="#0066cc"/>
+                            <text x="100" y="40" font-size="18" font-weight="bold" fill="white" text-anchor="middle" font-family="Arial">TELECOM</text>
+                            <text x="100" y="58" font-size="16" fill="white" text-anchor="middle" font-family="Arial">Constitución</text>
+                        </svg>
+                    </div>
+                    <div class="client-slide">
+                        <svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="200" height="80" fill="#ff6b35"/>
+                            <text x="100" y="38" font-size="17" font-weight="bold" fill="white" text-anchor="middle" font-family="Arial">CALDERAS</text>
+                            <text x="100" y="56" font-size="16" fill="white" text-anchor="middle" font-family="Arial">Y MONTAJES</text>
+                        </svg>
+                    </div>
+                    <div class="client-slide">
+                        <svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="200" height="80" fill="#2c3e50"/>
+                            <text x="100" y="35" font-size="28" font-weight="bold" fill="white" text-anchor="middle" font-family="Arial">LN</text>
+                            <text x="100" y="55" font-size="13" fill="#ecf0f1" text-anchor="middle" font-family="Arial">Construcciones</text>
+                        </svg>
+                    </div>
+                    
+                    <!-- Duplicate for infinite effect -->
+                    <div class="client-slide">
+                        <svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="200" height="80" fill="#e91e63"/>
+                            <text x="100" y="45" font-size="28" font-weight="bold" fill="white" text-anchor="middle" font-family="Arial">AVON</text>
+                        </svg>
+                    </div>
+                    <div class="client-slide">
+                        <svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="200" height="80" fill="#ffd700"/>
+                            <text x="100" y="45" font-size="28" font-weight="bold" fill="#c41e3a" text-anchor="middle" font-family="Arial">BIMBO</text>
+                        </svg>
+                    </div>
+                    <div class="client-slide">
+                        <svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="200" height="80" fill="#00529c"/>
+                            <text x="100" y="45" font-size="24" font-weight="bold" fill="white" text-anchor="middle" font-family="Arial">BIOSIDUS</text>
+                        </svg>
+                    </div>
+                    <div class="client-slide">
+                        <svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="200" height="80" fill="#004c97"/>
+                            <text x="100" y="45" font-size="32" font-weight="bold" fill="white" text-anchor="middle" font-family="Arial">RIS</text>
+                        </svg>
+                    </div>
+                    <div class="client-slide">
+                        <svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="200" height="80" fill="#0066cc"/>
+                            <text x="100" y="40" font-size="18" font-weight="bold" fill="white" text-anchor="middle" font-family="Arial">TELECOM</text>
+                            <text x="100" y="58" font-size="16" fill="white" text-anchor="middle" font-family="Arial">Constitución</text>
+                        </svg>
+                    </div>
+                    <div class="client-slide">
+                        <svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="200" height="80" fill="#ff6b35"/>
+                            <text x="100" y="38" font-size="17" font-weight="bold" fill="white" text-anchor="middle" font-family="Arial">CALDERAS</text>
+                            <text x="100" y="56" font-size="16" fill="white" text-anchor="middle" font-family="Arial">Y MONTAJES</text>
+                        </svg>
+                    </div>
+                    <div class="client-slide">
+                        <svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="200" height="80" fill="#2c3e50"/>
+                            <text x="100" y="35" font-size="28" font-weight="bold" fill="white" text-anchor="middle" font-family="Arial">LN</text>
+                            <text x="100" y="55" font-size="13" fill="#ecf0f1" text-anchor="middle" font-family="Arial">Construcciones</text>
+                        </svg>
+                    </div>
                 </div>
             </div>
         </div>
