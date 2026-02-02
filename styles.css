@@ -1109,7 +1109,18 @@ section {
     transition: all 0.4s ease;
 }
 
-.client-slide:hover svg {
+.client-slide img {
+    max-width: 180px;
+    max-height: 70px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: grayscale(80%) opacity(0.7);
+    transition: all 0.4s ease;
+}
+
+.client-slide:hover svg,
+.client-slide:hover img {
     filter: grayscale(0%) opacity(1);
     transform: scale(1.08);
 }
