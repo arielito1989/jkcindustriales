@@ -1,0 +1,44 @@
+# ========================================
+# JKC Montajes Industriales - .gitignore
+# ========================================
+
+# Documentación interna (no subir a GitHub)
+TAREA-EMAILJS-PENDIENTE.md
+CHANGELOG-2026-02-02-v2.7.md
+CHANGELOG-2026-01-28-v2.6.md
+
+# PDFs de la empresa (privados)
+*.pdf
+
+# Carpeta de agentes y configuraciones IDE
+.agent/
+.vscode/
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs y temporales
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Variables de entorno (por si en el futuro usas backend)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Backups y archivos temporales
+*.bak
+*.tmp
+*.swp
+*~
+
+# Node modules (por si agregas herramientas de build en el futuro)
+node_modules/
+package-lock.json
+yarn.lock
