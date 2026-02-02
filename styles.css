@@ -1705,6 +1705,94 @@ section {
     transform: scale(1.1) rotate(90deg);
 }
 
+/* Project Indicator - Shows current project number */
+.project-indicator {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.85);
+    color: white;
+    padding: 0.7rem 1.5rem;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    z-index: 10005;
+    display: none;
+    animation: slideDown 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+/* Mobile adjustments for project indicator */
+@media (max-width: 768px) {
+    .project-indicator {
+        top: 10px;
+        font-size: 0.8rem;
+        padding: 0.5rem 1rem;
+    }
+}
+
+/* Swipe Hint - Shows instruction to swipe for changing projects */
+.swipe-hint {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    background: rgba(248, 147, 31, 0.15);
+    border: 1px dashed rgba(248, 147, 31, 0.4);
+    border-radius: 8px;
+    color: var(--secondary-color);
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    animation: pulseHint 2s ease-in-out infinite;
+}
+
+.swipe-hint svg {
+    width: 16px !important;
+    height: 16px !important;
+    stroke-width: 2.5;
+}
+
+@keyframes pulseHint {
+    0%, 100% {
+        opacity: 0.7;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.02);
+    }
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+/* Solo mostrar hint en móviles */
+@media (max-width: 968px) {
+    .swipe-hint {
+        display: flex;
+    }
+}
+
 /* --- Filter Buttons Premium --- */
 .project-filters {
     display: flex;

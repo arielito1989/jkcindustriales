@@ -290,8 +290,12 @@ function openLightbox(projectIndex, startImageIndex = 0) {
     lightbox.style.display = 'flex';
     document.body.style.overflow = 'hidden';
     
-    // Inicializar gestos táctiles para el lightbox
+    // Inicializar gestos táctiles para imágenes y proyectos
     initLightboxTouchGestures();
+    initProjectSwipeGestures();
+    
+    // Actualizar indicador de proyecto
+    updateProjectIndicator();
 }
 
 // Lightbox: Close
@@ -693,6 +697,7 @@ if (document.readyState === 'loading') {
 // TOUCH GESTURES FOR LIGHTBOX
 // =========================================
 
+// Gestos para navegar entre IMÁGENES del mismo proyecto
 function initLightboxTouchGestures() {
     const lightboxImageContainer = document.querySelector('.lightbox-image-container');
     if (!lightboxImageContainer) return;
@@ -710,11 +715,11 @@ function initLightboxTouchGestures() {
     lightboxImageContainer.addEventListener('touchend', (e) => {
         touchEndX = e.changedTouches[0].screenX;
         touchEndY = e.changedTouches[0].screenY;
-        handleSwipeGesture();
+        handleImageSwipe();
     }, { passive: true });
 
-    function handleSwipeGesture() {
-        const swipeThreshold = 50; // Mínimo de píxeles para detectar swipe
+    function handleImageSwipe() {
+        const swipeThreshold = 50;
         const horizontalDiff = touchEndX - touchStartX;
         const verticalDiff = Math.abs(touchEndY - touchStartY);
 
@@ -729,6 +734,91 @@ function initLightboxTouchGestures() {
             }
         }
     }
+}
+
+// Gestos para navegar entre PROYECTOS (swipe en el panel de info)
+function initProjectSwipeGestures() {
+    const lightboxInfo = document.querySelector('.lightbox-info');
+    const swipeHint = document.getElementById('swipeHint');
+    if (!lightboxInfo) return;
+
+    let touchStartX = 0;
+    let touchEndX = 0;
+    let touchStartY = 0;
+    let touchEndY = 0;
+    let isScrolling = false;
+    let hasSwipedBefore = sessionStorage.getItem('hasSwipedProject');
+
+    lightboxInfo.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+        isScrolling = false;
+    }, { passive: true });
+
+    lightboxInfo.addEventListener('touchmove', (e) => {
+        // Detectar si el usuario está scrolleando verticalmente
+        const currentY = e.changedTouches[0].screenY;
+        const verticalDiff = Math.abs(currentY - touchStartY);
+        if (verticalDiff > 10) {
+            isScrolling = true;
+        }
+    }, { passive: true });
+
+    lightboxInfo.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        touchEndY = e.changedTouches[0].screenY;
+        
+        // Solo manejar swipe si NO estaba scrolleando
+        if (!isScrolling) {
+            const swipeDetected = handleProjectSwipe();
+            
+            // Ocultar hint después del primer swipe
+            if (swipeDetected && swipeHint && !hasSwipedBefore) {
+                swipeHint.style.animation = 'fadeOut 0.3s ease';
+                setTimeout(() => {
+                    swipeHint.style.display = 'none';
+                }, 300);
+                sessionStorage.setItem('hasSwipedProject', 'true');
+            }
+        }
+    }, { passive: true });
+
+    function handleProjectSwipe() {
+        const swipeThreshold = 80; // Más threshold para evitar cambios accidentales
+        const horizontalDiff = touchEndX - touchStartX;
+        const verticalDiff = Math.abs(touchEndY - touchStartY);
+
+        // Solo si es un swipe claramente horizontal
+        if (verticalDiff < 50) {
+            if (horizontalDiff > swipeThreshold) {
+                // Swipe derecha → proyecto anterior
+                prevProject();
+                return true;
+            } else if (horizontalDiff < -swipeThreshold) {
+                // Swipe izquierda → proyecto siguiente
+                nextProject();
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    // Ocultar hint automáticamente si el usuario ya swipeó antes
+    if (hasSwipedBefore && swipeHint) {
+        swipeHint.style.display = 'none';
+    }
+}
+
+// Actualizar indicador de proyecto actual
+function updateProjectIndicator() {
+    const indicator = document.getElementById('projectIndicator');
+    if (!indicator) return;
+    
+    const totalProjects = projectsData.length;
+    const currentNum = currentProjectIndex + 1;
+    
+    indicator.textContent = `Proyecto ${currentNum} de ${totalProjects}`;
+    indicator.style.display = 'block';
 }
 
 

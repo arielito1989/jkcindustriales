@@ -800,6 +800,9 @@
         <div class="lightbox-overlay"></div>
         <div class="lightbox-content">
             <button class="lightbox-close" id="lightboxClose" aria-label="Cerrar">&times;</button>
+            
+            <!-- Indicador de proyecto actual -->
+            <div class="project-indicator" id="projectIndicator">Proyecto 1 de 5</div>
 
             <div class="lightbox-image-container">
                 <div class="lightbox-prev" id="lightboxPrev">
@@ -822,6 +825,17 @@
             </div>
 
             <div class="lightbox-info">
+                <!-- Hint de swipe (solo móvil) -->
+                <div class="swipe-hint" id="swipeHint">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                    <span>Desliza para cambiar de proyecto</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </div>
+                
                 <span class="lightbox-category">Categoría</span>
                 <h2 class="lightbox-title">Título del Proyecto</h2>
                 <p class="lightbox-description">Descripción del proyecto...</p>
