@@ -1351,8 +1351,10 @@ section {
     justify-content: center;
     padding: 2rem;
     overflow-y: auto;
+    overflow-x: hidden;
     backdrop-filter: blur(0px);
     transition: backdrop-filter 0.4s ease;
+    -webkit-overflow-scrolling: touch;
 }
 
 .lightbox.active {
@@ -1387,6 +1389,7 @@ section {
     gap: 2rem;
     max-width: 1400px;
     width: 95%;
+    margin: 2rem auto;
     background: #1a1a1a;
     border-radius: var(--radius-lg);
     overflow: hidden;
@@ -1454,9 +1457,12 @@ section {
     background: #1a1a1a;
     color: #f5f5f5;
     overflow-y: auto;
+    overflow-x: hidden;
     max-height: 80vh;
     grid-column: 2;
     grid-row: 1;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
 }
 
 .lightbox-info::-webkit-scrollbar {
@@ -3112,10 +3118,13 @@ section {
         height: 100%;
         padding: 3rem;
         overflow-y: auto;
+        overflow-x: hidden;
         background: #151515;
         display: flex;
         flex-direction: column;
         border-left: 1px solid rgba(255, 255, 255, 0.05);
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
     }
 
     @media (max-width: 968px) {
@@ -3145,8 +3154,11 @@ section {
             grid-row: 2 / 3;
             padding: 1.5rem;
             height: auto;
-            overflow-y: visible;
-            /* Let it scroll naturally */
+            max-height: 40vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: contain;
         }
 
         .client-logo img {
@@ -3272,7 +3284,11 @@ section {
 
             .lightbox-info {
                 padding: 2rem 1.5rem;
-                max-height: none;
+                max-height: 35vh;
+                overflow-y: auto;
+                overflow-x: hidden;
+                -webkit-overflow-scrolling: touch;
+                overscroll-behavior: contain;
             }
 
             .lightbox-title {
