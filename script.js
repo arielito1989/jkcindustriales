@@ -750,8 +750,14 @@ if (document.readyState === 'loading') {
 // TOUCH GESTURES FOR LIGHTBOX
 // =========================================
 
+// Flags para evitar inicialización múltiple
+let imageGesturesInitialized = false;
+let projectGesturesInitialized = false;
+
 // Gestos para navegar entre IMÁGENES del mismo proyecto
 function initLightboxTouchGestures() {
+    if (imageGesturesInitialized) return; // Ya inicializado
+    
     const lightboxImageContainer = document.querySelector('.lightbox-image-container');
     if (!lightboxImageContainer) return;
 
@@ -787,10 +793,14 @@ function initLightboxTouchGestures() {
             }
         }
     }
+    
+    imageGesturesInitialized = true;
 }
 
 // Gestos para navegar entre PROYECTOS (swipe en el panel de info)
 function initProjectSwipeGestures() {
+    if (projectGesturesInitialized) return; // Ya inicializado
+    
     const lightboxInfo = document.querySelector('.lightbox-info');
     const swipeHint = document.getElementById('swipeHint');
     if (!lightboxInfo) return;
@@ -870,6 +880,8 @@ function initProjectSwipeGestures() {
     if (hasSwipedBefore && swipeHint) {
         swipeHint.style.display = 'none';
     }
+    
+    projectGesturesInitialized = true;
 }
 
 // Actualizar indicador de proyecto actual
