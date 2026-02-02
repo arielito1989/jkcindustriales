@@ -284,6 +284,13 @@ function openLightbox(projectIndex, startImageIndex = 0) {
     }
 
     currentImageIndex = (startImageIndex >= 0 && startImageIndex < currentGallery.length) ? startImageIndex : 0;
+    
+    // Limpiar thumbnails del proyecto anterior
+    const thumbnailsContainer = document.getElementById('lightboxThumbnails');
+    if (thumbnailsContainer) {
+        thumbnailsContainer.innerHTML = '';
+    }
+    
     updateLightboxImage();
 
     lightbox.classList.add('active');
@@ -362,6 +369,9 @@ function updateLightboxImage() {
         if (lightboxCounter) {
             lightboxCounter.textContent = `Proyecto ${currentProjectIndex + 1}/${projectsData.length} • Foto ${currentImageIndex + 1}/${currentGallery.length}`;
         }
+        
+        // Actualizar thumbnails
+        updateThumbnails();
 
         // Load handler con fade in
         lightboxImage.onload = () => {
@@ -387,6 +397,49 @@ function updateLightboxImage() {
             isTransitioning = false;
         }
     }, 300); // Delay para fade out
+}
+
+// Populate and update thumbnails
+function updateThumbnails() {
+    const thumbnailsContainer = document.getElementById('lightboxThumbnails');
+    if (!thumbnailsContainer || currentGallery.length === 0) return;
+    
+    // Solo popular thumbnails la primera vez que se abre el proyecto
+    if (thumbnailsContainer.children.length === 0) {
+        thumbnailsContainer.innerHTML = '';
+        
+        currentGallery.forEach((img, index) => {
+            const thumbDiv = document.createElement('div');
+            thumbDiv.className = 'thumbnail-item';
+            thumbDiv.dataset.index = index;
+            
+            const thumbImg = document.createElement('img');
+            thumbImg.src = img.src;
+            thumbImg.alt = `Thumbnail ${index + 1}`;
+            thumbImg.loading = 'lazy';
+            
+            thumbDiv.appendChild(thumbImg);
+            thumbnailsContainer.appendChild(thumbDiv);
+            
+            // Click handler
+            thumbDiv.addEventListener('click', () => {
+                currentImageIndex = index;
+                updateLightboxImage();
+            });
+        });
+    }
+    
+    // Actualizar estado activo
+    const allThumbs = thumbnailsContainer.querySelectorAll('.thumbnail-item');
+    allThumbs.forEach((thumb, index) => {
+        thumb.classList.toggle('active', index === currentImageIndex);
+    });
+    
+    // Auto-scroll para mantener thumbnail activo visible
+    const activeThumb = thumbnailsContainer.querySelector('.thumbnail-item.active');
+    if (activeThumb) {
+        activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
 }
 
 // Lightbox: Navigation
@@ -745,31 +798,41 @@ function initProjectSwipeGestures() {
     let touchStartX = 0;
     let touchEndX = 0;
     let touchStartY = 0;
-    let touchEndY = 0;
-    let isScrolling = false;
+    let touchStartTime = 0;
+    let isSwiping = false;
     let hasSwipedBefore = sessionStorage.getItem('hasSwipedProject');
 
     lightboxInfo.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-        touchStartY = e.changedTouches[0].screenY;
-        isScrolling = false;
+        touchStartX = e.changedTouches[0].clientX;
+        touchStartY = e.changedTouches[0].clientY;
+        touchStartTime = Date.now();
+        isSwiping = false;
     }, { passive: true });
 
     lightboxInfo.addEventListener('touchmove', (e) => {
-        // Detectar si el usuario está scrolleando verticalmente
-        const currentY = e.changedTouches[0].screenY;
-        const verticalDiff = Math.abs(currentY - touchStartY);
-        if (verticalDiff > 10) {
-            isScrolling = true;
+        if (!isSwiping) {
+            const currentX = e.changedTouches[0].clientX;
+            const currentY = e.changedTouches[0].clientY;
+            const deltaX = Math.abs(currentX - touchStartX);
+            const deltaY = Math.abs(currentY - touchStartY);
+            
+            // Determinar dirección del gesto
+            if (deltaX > deltaY && deltaX > 15) {
+                // Es un swipe horizontal
+                isSwiping = true;
+                e.preventDefault(); // Prevenir scroll mientras se hace swipe
+            }
+        } else {
+            e.preventDefault(); // Continuar previniendo scroll durante swipe
         }
-    }, { passive: true });
+    }, { passive: false }); // passive: false para poder usar preventDefault
 
     lightboxInfo.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].screenX;
-        touchEndY = e.changedTouches[0].screenY;
+        touchEndX = e.changedTouches[0].clientX;
+        const touchDuration = Date.now() - touchStartTime;
         
-        // Solo manejar swipe si NO estaba scrolleando
-        if (!isScrolling) {
+        // Solo procesar si fue un swipe horizontal detectado
+        if (isSwiping && touchDuration < 500) { // Máximo 500ms para ser swipe
             const swipeDetected = handleProjectSwipe();
             
             // Ocultar hint después del primer swipe
@@ -781,20 +844,20 @@ function initProjectSwipeGestures() {
                 sessionStorage.setItem('hasSwipedProject', 'true');
             }
         }
+        
+        isSwiping = false;
     }, { passive: true });
 
     function handleProjectSwipe() {
-        const swipeThreshold = 80; // Más threshold para evitar cambios accidentales
+        const swipeThreshold = 60; // Reducido para mejor respuesta
         const horizontalDiff = touchEndX - touchStartX;
-        const verticalDiff = Math.abs(touchEndY - touchStartY);
 
-        // Solo si es un swipe claramente horizontal
-        if (verticalDiff < 50) {
-            if (horizontalDiff > swipeThreshold) {
+        if (Math.abs(horizontalDiff) > swipeThreshold) {
+            if (horizontalDiff > 0) {
                 // Swipe derecha → proyecto anterior
                 prevProject();
                 return true;
-            } else if (horizontalDiff < -swipeThreshold) {
+            } else {
                 // Swipe izquierda → proyecto siguiente
                 nextProject();
                 return true;

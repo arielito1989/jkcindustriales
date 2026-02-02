@@ -1638,6 +1638,86 @@ section {
     /* Posicionada casi en el borde derecho del contenedor de imagen */
 }
 
+/* Lightbox Thumbnails Gallery */
+.lightbox-thumbnails {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.6rem;
+    background: rgba(0, 0, 0, 0.85);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    z-index: 10;
+    max-width: 90%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: var(--secondary-color) rgba(0, 0, 0, 0.3);
+}
+
+.lightbox-thumbnails::-webkit-scrollbar {
+    height: 4px;
+}
+
+.lightbox-thumbnails::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 2px;
+}
+
+.lightbox-thumbnails::-webkit-scrollbar-thumb {
+    background: var(--secondary-color);
+    border-radius: 2px;
+}
+
+.thumbnail-item {
+    flex-shrink: 0;
+    width: 60px;
+    height: 45px;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    opacity: 0.6;
+    position: relative;
+}
+
+.thumbnail-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.thumbnail-item:hover {
+    opacity: 0.85;
+    transform: scale(1.05);
+}
+
+.thumbnail-item.active {
+    opacity: 1;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 2px rgba(248, 147, 31, 0.3);
+}
+
+.thumbnail-item.active::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 2px solid var(--secondary-color);
+    border-radius: 4px;
+    pointer-events: none;
+}
+
+/* Hide thumbnails if only one image */
+.lightbox-thumbnails:has(.thumbnail-item:only-child) {
+    display: none;
+}
+
 /* Project Navigation Buttons */
 .lightbox-project-nav {
     margin-top: 3rem;
@@ -3395,6 +3475,19 @@ section {
             .btn-project-nav svg {
                 width: 18px !important;
                 height: 18px !important;
+            }
+            
+            /* Thumbnails responsive */
+            .lightbox-thumbnails {
+                bottom: 10px;
+                padding: 0.4rem;
+                gap: 0.3rem;
+                max-width: 95%;
+            }
+            
+            .thumbnail-item {
+                width: 50px;
+                height: 38px;
             }
         }
 
