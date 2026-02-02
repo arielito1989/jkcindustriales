@@ -6,9 +6,14 @@
 TAREA-EMAILJS-PENDIENTE.md
 CHANGELOG-2026-02-02-v2.7.md
 CHANGELOG-2026-01-28-v2.6.md
+README-LOCAL.md
 
 # PDFs de la empresa (privados)
 *.pdf
+
+# Logos originales (privados)
+logo.jpeg
+logobro.png
 
 # Carpeta de agentes y configuraciones IDE
 .agent/
