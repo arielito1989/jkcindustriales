@@ -289,6 +289,9 @@ function openLightbox(projectIndex, startImageIndex = 0) {
     lightbox.classList.add('active');
     lightbox.style.display = 'flex';
     document.body.style.overflow = 'hidden';
+    
+    // Inicializar gestos táctiles para el lightbox
+    initLightboxTouchGestures();
 }
 
 // Lightbox: Close
@@ -446,7 +449,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (menuToggle && navMenu) {
         // Toggle menu
         menuToggle.addEventListener('click', (e) => {
-            e.stopPropagation(); // Prevenir que se propague al document
+            e.stopPropagation();
             menuToggle.classList.toggle('active');
             navMenu.classList.toggle('active');
         });
@@ -459,18 +462,45 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
         
-        // Cerrar menú al hacer click en CUALQUIER parte de la página
-        document.addEventListener('click', (e) => {
-            // Si el menú está abierto y el click no es en el menú ni en el botón
+        // Cerrar menú al hacer click en el overlay (::before pseudo-element)
+        // Detectar clicks fuera del menú
+        navMenu.addEventListener('click', (e) => {
+            // Si el click fue en el ::before (overlay), cerrar el menú
+            const rect = navMenu.getBoundingClientRect();
+            if (e.clientX < rect.left) {
+                menuToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+
+        // Listener global para clicks fuera
+        document.addEventListener('touchend', (e) => {
             if (navMenu.classList.contains('active')) {
-                if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+                const rect = navMenu.getBoundingClientRect();
+                const touchX = e.changedTouches[0].clientX;
+                const touchY = e.changedTouches[0].clientY;
+                
+                // Si el touch fue fuera del menú y no en el botón toggle
+                if ((touchX < rect.left || touchX > rect.right || 
+                     touchY < rect.top || touchY > rect.bottom) &&
+                    !menuToggle.contains(e.target)) {
                     menuToggle.classList.remove('active');
                     navMenu.classList.remove('active');
                 }
             }
+        }, { passive: true });
+
+        // También para clicks de mouse (desktop/tablet)
+        document.addEventListener('click', (e) => {
+            if (navMenu.classList.contains('active') && 
+                !navMenu.contains(e.target) && 
+                !menuToggle.contains(e.target)) {
+                menuToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
         });
 
-        // También cerrar con la tecla Escape
+        // Escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && navMenu.classList.contains('active')) {
                 menuToggle.classList.remove('active');
@@ -656,6 +686,49 @@ if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initScrollAnimations);
 } else {
     initScrollAnimations();
+}
+
+
+// =========================================
+// TOUCH GESTURES FOR LIGHTBOX
+// =========================================
+
+function initLightboxTouchGestures() {
+    const lightboxImageContainer = document.querySelector('.lightbox-image-container');
+    if (!lightboxImageContainer) return;
+
+    let touchStartX = 0;
+    let touchEndX = 0;
+    let touchStartY = 0;
+    let touchEndY = 0;
+
+    lightboxImageContainer.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+    }, { passive: true });
+
+    lightboxImageContainer.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        touchEndY = e.changedTouches[0].screenY;
+        handleSwipeGesture();
+    }, { passive: true });
+
+    function handleSwipeGesture() {
+        const swipeThreshold = 50; // Mínimo de píxeles para detectar swipe
+        const horizontalDiff = touchEndX - touchStartX;
+        const verticalDiff = Math.abs(touchEndY - touchStartY);
+
+        // Solo detectar swipe horizontal si el movimiento vertical es menor
+        if (verticalDiff < 100) {
+            if (horizontalDiff > swipeThreshold) {
+                // Swipe derecha → imagen anterior
+                prevImage();
+            } else if (horizontalDiff < -swipeThreshold) {
+                // Swipe izquierda → imagen siguiente
+                nextImage();
+            }
+        }
+    }
 }
 
 

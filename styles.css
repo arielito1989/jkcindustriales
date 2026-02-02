@@ -2907,6 +2907,25 @@ section {
         padding-top: 80px;
     }
 
+    /* Overlay oscuro detrás del menú */
+    .nav-menu::before {
+        content: '';
+        position: fixed;
+        top: 80px;
+        left: 0;
+        width: 100vw;
+        height: calc(100vh - 80px);
+        background: rgba(0, 0, 0, 0);
+        pointer-events: none;
+        transition: background 0.3s ease;
+        z-index: -1;
+    }
+
+    .nav-menu.active::before {
+        background: rgba(0, 0, 0, 0.5);
+        pointer-events: auto;
+    }
+
     .nav-menu {
         position: fixed;
         top: 80px;
@@ -2975,19 +2994,6 @@ section {
 
     .menu-toggle.active span:nth-child(3) {
         transform: rotate(-45deg) translate(8px, -8px);
-    }
-
-    /* Overlay oscuro cuando el menú está abierto */
-    .nav-menu.active::before {
-        content: '';
-        position: fixed;
-        top: 80px;
-        left: 0;
-        width: 40%;
-        height: calc(100vh - 80px);
-        background: rgba(0, 0, 0, 0.5);
-        z-index: -1;
-        animation: fadeIn 0.3s ease;
     }
 
     @keyframes fadeIn {
