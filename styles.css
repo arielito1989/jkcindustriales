@@ -37,12 +37,24 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+}
+
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     line-height: 1.6;
     color: var(--text-main);
     background-color: #f5f7fa;
     overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+    min-height: 100vh;
 }
 
 
@@ -2872,7 +2884,7 @@ section {
     }
 
     .menu-toggle {
-        display: none !important;
+        display: none;
     }
 }
 
@@ -2890,6 +2902,7 @@ section {
         gap: 1rem;
         transition: left 0.3s ease;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        z-index: 999;
     }
 
     .nav-menu.active {
@@ -2897,7 +2910,34 @@ section {
     }
 
     .menu-toggle {
-        display: flex;
+        display: flex !important;
+        flex-direction: column;
+        gap: 5px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 8px;
+        z-index: 1000;
+    }
+
+    .menu-toggle span {
+        width: 28px;
+        height: 3px;
+        background: var(--primary-color);
+        border-radius: 2px;
+        transition: var(--transition-fast);
+    }
+
+    .menu-toggle.active span:nth-child(1) {
+        transform: rotate(45deg) translate(8px, 8px);
+    }
+
+    .menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .menu-toggle.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(8px, -8px);
     }
 
     .services-grid,
@@ -3054,37 +3094,6 @@ section {
         }
 
         /* Removed redundant .lightbox-image-container re-definition that was here */
-
-        /* --- Menu Toggle Mobile --- */
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            padding: 5px;
-        }
-
-        .menu-toggle span {
-            width: 25px;
-            height: 3px;
-            background: var(--primary-color);
-            border-radius: 2px;
-            transition: var(--transition-fast);
-        }
-
-        .menu-toggle.active span:nth-child(1) {
-            transform: rotate(45deg) translate(7px, 7px);
-        }
-
-        .menu-toggle.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .menu-toggle.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -7px);
-        }
 
         /* --- Hero Animations --- */
         .animate-fade-in {
