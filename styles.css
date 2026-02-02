@@ -1036,27 +1036,6 @@ section {
     transform: scale(1.08);
 }
 
-/* Client Name Cards (when no logo available) */
-.client-name {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--primary-color);
-    text-align: center;
-    padding: 1rem 1.5rem;
-    background: rgba(0, 82, 156, 0.05);
-    border: 2px solid rgba(0, 82, 156, 0.15);
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    min-width: 200px;
-}
-
-.client-logo:hover .client-name {
-    background: rgba(0, 82, 156, 0.1);
-    border-color: var(--primary-color);
-    transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(0, 82, 156, 0.15);
-}
-
 /* --- Footer Redesign --- */
 .footer {
     background: #111827;
